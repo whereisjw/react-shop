@@ -16,7 +16,11 @@ style={{ backgroundImage: "url(" + bg + ")" }}
 ```
 
 ----------------------------------------------\
-리액트 라우터 돔 npm install react-router-dom@6
+
+# 리액트 라우터 돔 react-router-dom 설치
+
+### npm install react-router-dom@6
+
 터미널에 설치
 index.js에
 
@@ -33,7 +37,7 @@ root.render(
 );
 ```
 
-브라우저 라우터 import해서 코드작성
+브라우저 라우터 import 꼭해야함
 
 app.js에서 route,routes,link,navigate,nested routes import하기
 
@@ -52,10 +56,6 @@ import { Routes, Route, Link } from "react-router-dom";
             </Nav.Link>
 
                 <Route path="*" element={<div>없는페이지입니다</div>} />
-
-
-
-
 ```
 
 nested Routes
