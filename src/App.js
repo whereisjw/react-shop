@@ -5,6 +5,7 @@ import { useState } from "react";
 import data from "./data";
 import Card from "./Card";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import styled from "styled-components";
 import Detail from "./routes/Detail";
 import About from "./routes/About";
 import Event from "./routes/Event";
@@ -55,7 +56,7 @@ function App() {
             </>
           }
         />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} />
           <Route path="location" element={<div>위치정보임</div>} />

@@ -35,7 +35,7 @@ root.render(
 
 브라우저 라우터 import해서 코드작성
 
-app.js에서 route,routes,link 3가지 import하기
+app.js에서 route,routes,link,navigate,nested routes import하기
 
 ```
 import { Routes, Route, Link } from "react-router-dom";
@@ -81,4 +81,22 @@ const About = () => {
 };
 
 export default About;
+```
+
+'
+
+# styled-components
+
+npm install styled-components
+import styled from "styled-components";
+
+```
+  let YellowBtn = styled.button`
+    background: ${(props) => props.bg};
+    color: black;
+    padding: 7px 10px;
+  `;
+***
+      <YellowBtn bg="blue">버튼 </YellowBtn>
+      <YellowBtn bg="orange">버튼 </YellowBtn>
 ```
