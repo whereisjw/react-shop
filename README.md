@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# react bootstrap 오류
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Alt text](image.png)
 
-## Available Scripts
+cannot be invoked without 'new'
 
-In the project directory, you can run:
+#### import { Button } from "react-bootstrap";
 
-### `npm start`
+부트스트랩 자동 import 값 from 이후 "react-bootstrap"; 여야하는데 "bootstrap"; 으로 자동완성됨
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# 이미지 인라인으로 넣는법
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+import bg from "./img/dum1.png";
+style={{ backgroundImage: "url(" + bg + ")" }}
+```
 
-### `npm test`
+----------------------------------------------\
+리액트 라우터 돔 npm install react-router-dom@6
+터미널에 설치
+index.js에
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+import { BrowserRouter } from "react-router-dom";
 
-### `npm run build`
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+브라우저 라우터 import해서 코드작성
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+app.js에서 route,routes,link 3가지 import하기
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+import { Routes, Route, Link } from "react-router-dom";
+    <Link to="/detail">상세페이지</Link>
+        <Routes>
+    <Route path="/detail" element={<Detail />} />
+      </Routes>
 
-### `npm run eject`
+       <Nav.Link
+              onClick={() => {
+                navigate("/");
+              }}>
+              홈
+            </Nav.Link>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+                <Route path="*" element={<div>없는페이지입니다</div>} />
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+nested Routes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+<Route path="/about" element={<About />}>
+    <Route path="member" element={<About />} />
+    <Route path="location" element={<About />} />
+</Route>
+```
 
-### Code Splitting
+```
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+const About = () => {
+  return (
+    <>
+      <h4>회사정보</h4>
+      <Outlet></Outlet>
+    </>
+  );
+};
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default About;
+```
