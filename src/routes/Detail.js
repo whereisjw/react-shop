@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Detail = (props) => {
+  let [count, setCount] = useState(0);
   let { id } = useParams();
   let 찾은상품 = props.shoes.find((v) => v.id == id);
   return (
     <div>
+      <div className="alert alert-warning">3초이내 구매시 할인</div>
       <div className="container">
+        <button
+          onClick={() => {
+            setCount(count + 1);
+          }}>
+          버튼
+        </button>
         <div className="row">
           <div className="col-md-6">
             <img
