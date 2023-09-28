@@ -5,7 +5,7 @@ const Card = (props) => {
   let [src, setSrc] = useState([]);
   return (
     <>
-      <Col>
+      <Col md="4">
         <img
           src={`https://codingapple1.github.io/shop/shoes${props.i}.jpg`}
           width="80%"

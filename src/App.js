@@ -1,19 +1,20 @@
-import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+import { Col, Container, Nav, Navbar, Row, Table } from "react-bootstrap";
 import "./App.css";
 import bg from "./img/bg.png";
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import data from "./data";
 import Card from "./Card";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Detail from "./routes/Detail";
-import About from "./routes/About";
-import Event from "./routes/Event";
+import axios from "axios";
+import Cart from "./routes/Cart";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
-
+  let [loding, setLoding] = useState(true);
+  let [재고] = useState([10, 11, 12]);
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -36,7 +37,7 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-
+      {loding ? <strong>Loading...</strong> : null}
       <Link to="/detail">상세페이지</Link>
       <Routes>
         <Route
@@ -53,18 +54,35 @@ function App() {
                   ))}
                 </Row>
               </Container>
+
+              <button
+                onClick={() => {
+                  /* 로딩중ui듸우기 */
+
+                  setLoding(true);
+
+                  axios
+                    .get("https://codingapple1.github.io/shop/data2.json")
+                    .then((result) => {
+                      console.log(result.data);
+                      let copy = [...shoes, ...result.data];
+                      setShoes(copy);
+                      setLoding(false);
+                      /* 로딩중숨기기 */
+                    })
+                    .catch(() => {
+                      console.log("실패함");
+                      setLoding(false);
+                      /* 로딩중숨기기 */
+                    }); //catch
+                }}>
+                더보기
+              </button>
             </>
           }
         />
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
-        <Route path="/about" element={<About />}>
-          <Route path="member" element={<div>멤버임</div>} />
-          <Route path="location" element={<div>위치정보임</div>} />
-        </Route>
-        <Route path="/event" element={<Event />}>
-          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
-          <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
-        </Route>
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<div>없는페이지입니다</div>} />
       </Routes>
     </div>

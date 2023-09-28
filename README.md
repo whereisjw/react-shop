@@ -1,102 +1,123 @@
-# react bootstrap 오류
-
-![Alt text](image.png)
-
-cannot be invoked without 'new'
-
-#### import { Button } from "react-bootstrap";
-
-부트스트랩 자동 import 값 from 이후 "react-bootstrap"; 여야하는데 "bootstrap"; 으로 자동완성됨
-
-# 이미지 인라인으로 넣는법
+# 상품평,리뷰,Q&A 태그만들기
 
 ```
-import bg from "./img/dum1.png";
-style={{ backgroundImage: "url(" + bg + ")" }}
-```
-
-----------------------------------------------\
-
-# 리액트 라우터 돔 react-router-dom 설치
-
-### npm install react-router-dom@6
-
-터미널에 설치
-index.js에
-
-```
-import { BrowserRouter } from "react-router-dom";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-);
-```
-
-브라우저 라우터 import 꼭해야함
-
-app.js에서 route,routes,link,navigate,nested routes import하기
-
-```
-import { Routes, Route, Link } from "react-router-dom";
-    <Link to="/detail">상세페이지</Link>
-        <Routes>
-    <Route path="/detail" element={<Detail />} />
-      </Routes>
-
-       <Nav.Link
+<Nav variant="tabs" defaultActiveKey="link-0">
+          <Nav.Item>
+            <Nav.Link
               onClick={() => {
-                navigate("/");
-              }}>
-              홈
+                탭변경(0);
+              }}
+              eventKey="link-0">
+              Option 1
             </Nav.Link>
-
-                <Route path="*" element={<div>없는페이지입니다</div>} />
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              onClick={() => {
+                탭변경(1);
+              }}
+              eventKey="link-1">
+              Option 2
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              onClick={() => {
+                탭변경(2);
+              }}
+              eventKey="link-2">
+              Option 3
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+        <TabContent 탭={탭}></TabContent>
 ```
 
-nested Routes
-
 ```
-<Route path="/about" element={<About />}>
-    <Route path="member" element={<About />} />
-    <Route path="location" element={<About />} />
-</Route>
-```
-
-```
-import React from "react";
-import { Outlet } from "react-router-dom";
-
-const About = () => {
-  return (
-    <>
-      <h4>회사정보</h4>
-      <Outlet></Outlet>
-    </>
-  );
-};
-
-export default About;
+function TabContent(props) {
+  if (props.탭 == 0) {
+    return <div>내용0</div>;
+  }
+  if (props.탭 == 1) {
+    return <div>내용1</div>;
+  }
+  if (props.탭 == 2) {
+    return <div>내용2</div>;
+  }
+}
 ```
 
-'
-
-# styled-components
-
-npm install styled-components
-import styled from "styled-components";
+### AUTOMATIC BATCHING react에서 애니메이션주기
 
 ```
-  let YellowBtn = styled.button`
-    background: ${(props) => props.bg};
-    color: black;
-    padding: 7px 10px;
-  `;
-***
-      <YellowBtn bg="blue">버튼 </YellowBtn>
-      <YellowBtn bg="orange">버튼 </YellowBtn>
+function TabContent(props) {
+let [fade, setFade] = useState("");
+useEffect(() => {
+setTimeout(() => {
+setFade("end");
+}, 100);
+
+    return () => {
+      setFade("");
+    };
+
+}, [props.탭]);
+```
+
+# redux로 장바구니 만들기
+
+```
+npm install @reduxjs/toolkit react-redux
+```
+
+터미널에 입력
+
+```
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+
+createSlice({
+  name: "state이름",
+  initialState: "값",
+});
+
+export default configureStore({
+  reducer: {},
+});
+
+```
+
+store.js 파일 만들어서 코드복붙하기
+
+```
+  <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+```
+
+index.js에서 provider로 감싸기
+
+```
+  let a = useSelector((state) => {
+    return state;
+  });
+```
+
+useSelector 함수 적기
+
+### redux 함수변경
+
+1.변경함수만들기(reducers)
+2.export(디스트럭쳐링으로 하면 용이)
+
+```
+export let { changNwame } = user.actions;
+```
+
+3.dispatch로 변경
+
+```
+  let dispatch = useDispatch();
+     dispatch(changeName());
 ```
